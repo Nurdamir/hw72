@@ -17,10 +17,16 @@ export interface PizzaMutation {
   price: string;
 }
 
-// export interface CartDish {
-//   dish: Dish;
-//   amount: number;
-// }
+export interface CartPizza {
+  pizza: Pizza;
+  amount: number;
+}
+
+export interface ApiOrderList {
+  [id: string]: number;
+}
+
+
 //
 // export interface Customer {
 //   name: string;

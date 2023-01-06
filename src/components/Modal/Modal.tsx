@@ -3,11 +3,10 @@ import Backdrop from "../Backdrop/Backdrop";
 
 interface Props extends React.PropsWithChildren {
   show: boolean;
-  title: string;
   onClose: React.MouseEventHandler;
 }
 
-const Modal: React.FC<Props> = ({show, title, onClose, children}) => {
+const Modal: React.FC<Props> = ({show, onClose, children}) => {
   return (
     <>
       <Backdrop show={show} onClick={onClose}/>
@@ -18,9 +17,6 @@ const Modal: React.FC<Props> = ({show, title, onClose, children}) => {
       >
         <div className="modal-dialog" onClick={e => e.stopPropagation()}>
           <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5">{title}</h1>
-            </div>
             {children}
           </div>
         </div>

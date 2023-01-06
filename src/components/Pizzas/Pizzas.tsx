@@ -6,15 +6,19 @@ import {selectFetchAllPizzasLoading, selectPizzas} from "../../store/pizzasSlice
 import {fetchAllPizzas} from "../../store/pizzasThunks";
 import {Link} from "react-router-dom";
 
-const Pizzas: React.FC = () => {
+const Pizzas = () => {
   const dispatch = useAppDispatch();
   const pizzas = useAppSelector(selectPizzas);
   const fetchLoading = useAppSelector(selectFetchAllPizzasLoading);
+
 
   useEffect(() => {
     dispatch(fetchAllPizzas())
   }, [dispatch]);
 
+  // const total = cartDishes.reduce((sum, cartDish) => {
+  //   return sum + cartDish.amount * cartDish.dish.price;
+  // }, 0);
 
   return (
     <div className="p-3">

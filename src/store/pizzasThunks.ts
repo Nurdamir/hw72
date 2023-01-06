@@ -43,9 +43,9 @@ export const fetchAllPizzas = createAsyncThunk<Pizza[]>(
 );
 
 export const fetchOnePizza = createAsyncThunk<ApiPizza, string>(
-  'pizza/fetchOne',
+  'pizzas/fetchOne',
   async (id) => {
-    const response = await axiosApi.get<ApiPizza | null>('/pizza/' + id + '.json');
+    const response = await axiosApi.get<ApiPizza | null>('/pizzas/' + id + '.json');
     const pizza = response.data;
 
     if (pizza === null) {

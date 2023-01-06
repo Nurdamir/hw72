@@ -13,20 +13,21 @@ const EditDish = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const fetchOneLoading = useAppSelector(selectOneFetchLoading);
-  const dish = useAppSelector(selectOnePizza);
+  const pizza = useAppSelector(selectOnePizza);
 
   useEffect(() => {
+    console.log('here');
     dispatch(fetchOnePizza(id));
   }, [id, dispatch]);
 
-  const onSubmit = async (dish: ApiPizza) => {
-    await dispatch(updatePizza({id, pizza: dish}));
+  const onSubmit = async (pizza: ApiPizza) => {
+    await dispatch(updatePizza({id, pizza: pizza}));
     navigate('/admin');
   };
 
-  const existingDish = dish && {
-    ...dish,
-    price: dish.price.toString(),
+  const existingDish = pizza && {
+    ...pizza,
+    price: pizza.price.toString(),
   };
 
   return (
