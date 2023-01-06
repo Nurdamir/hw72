@@ -1,7 +1,6 @@
-import {ApiOrderList, CartPizza, Pizza} from "../types";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {CartPizza, Pizza} from "../types";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../app/store";
-import axiosApi from "../axiosApi";
 
 interface CartState {
   cartPizzas: CartPizza[];

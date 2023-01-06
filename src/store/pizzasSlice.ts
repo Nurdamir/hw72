@@ -1,26 +1,32 @@
-import {ApiPizza, Pizza} from "../types";
+import {ApiPizza, Order, Pizza} from "../types";
 import {createSlice} from "@reduxjs/toolkit";
 import {RootState} from "../app/store";
-import {createPizza, deletePizza, fetchAllPizzas, fetchOnePizza, updatePizza} from "./pizzasThunks";
+import {createPizza, deletePizza, fetchAllPizzas, fetchOnePizza, getOrders, updatePizza} from "./pizzasThunks";
+
+
 
 interface PizzasState {
   items: Pizza[];
+  orders: Order[];
   onePizza: null | ApiPizza;
   fetchAllPizzasLoading: boolean;
   deleteLoading: false | string;
   createLoading: boolean;
   updateLoading: false | string;
   fetchOneLoading: boolean;
+  fetchOrdersLoading: boolean;
 }
 
 const initialState: PizzasState = {
   items: [],
+  orders: [],
   onePizza: null,
   fetchAllPizzasLoading: false,
   deleteLoading: false,
   createLoading: false,
   updateLoading: false,
   fetchOneLoading: false,
+  fetchOrdersLoading: false,
 }
 
 export const pizzasSlice = createSlice({
@@ -28,6 +34,17 @@ export const pizzasSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getOrders.pending, (state) => {
+      state.fetchOrdersLoading = true;
+    });
+    builder.addCase(getOrders.fulfilled, (state, {payload: orders}) => {
+      state.fetchOrdersLoading = false;
+      state.orders = orders;
+    });
+    builder.addCase(getOrders.rejected, (state) => {
+      state.fetchOrdersLoading = false;
+    });
+
     builder.addCase(fetchAllPizzas.pending, (state) => {
       state.fetchAllPizzasLoading = true;
     });
@@ -84,6 +101,7 @@ export const pizzasSlice = createSlice({
 
 export const pizzasReducer = pizzasSlice.reducer;
 
+export const selectOrders = (state: RootState) => state.pizzas.orders;
 export const selectPizzas = (state: RootState) => state.pizzas.items;
 export const selectFetchAllPizzasLoading = (state: RootState) => state.pizzas.fetchAllPizzasLoading;
 export const selectOneFetchLoading = (state: RootState) => state.pizzas.fetchOneLoading;

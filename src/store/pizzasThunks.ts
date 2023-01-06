@@ -1,11 +1,34 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ApiPizza, ApiPizzasList, Pizza} from "../types";
+import {ApiOrderList, ApiPizza, ApiPizzasList, Order, Pizza} from "../types";
 import axiosApi from "../axiosApi";
 
 interface UpdatePizzaParams {
   id: string;
   pizza: ApiPizza;
 }
+
+export const getOrders = createAsyncThunk(
+  'orders/getOrders',
+  async (_ , thunkAPI) => {
+    const ordersResponse = await axiosApi.get<ApiOrderList | null>('/orders.json')
+    const orders = ordersResponse.data;
+
+    let newOrders: Order[] = [];
+    if (orders) {
+      newOrders = Object.keys(orders).map(id => {
+        const order = orders[id];
+        return {
+          ...order,
+          id: id
+        }
+      });
+    }
+
+    // thunkAPI.getState()
+
+    return newOrders;
+  }
+);
 
 export const createPizza = createAsyncThunk<void, ApiPizza>(
   'pizzas/create',

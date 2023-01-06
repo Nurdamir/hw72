@@ -3,7 +3,7 @@ import Modal from "../Modal/Modal";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {removeDish, resetCart, selectCartDishes} from "../../store/cartSlice";
 import {DELIVERY_PRICE} from "../../constants";
-import {ApiOrderList} from "../../types";
+import {Order} from "../../types";
 import {createOrderDishes} from "../../store/cartThunks";
 
 interface Props {
@@ -24,12 +24,10 @@ const ModalCart: React.FC<Props> = ({show, onClose}) => {
   };
 
   const postOrder = async () => {
-    const ordersList: ApiOrderList = {};
+    const ordersList: Order = {};
     cartDishes.forEach(onePizza => {
       ordersList[onePizza.pizza.id] = onePizza.amount;
     });
-
-    console.log(ordersList)
 
     await dispatch(createOrderDishes(ordersList));
     await dispatch(resetCart());

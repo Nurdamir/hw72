@@ -1,15 +1,14 @@
 import React from 'react';
 import Navbar from "../Navbar/Navbar";
+import {useLocation} from "react-router-dom";
 
 const Layout: React.FC<React.PropsWithChildren> = ({children}) => {
-
-
-  let admin = true;
+const location = useLocation();
 
   return (
     <>
       <header>
-        {admin ? (<Navbar/>) : (
+        {location.pathname !== '/' ? (<Navbar/>) : (
           <div className="navbar navbar-expand-sm navbar-dark bg-primary">
             <div className="container-fluid">
               <span className="navbar-brand">Turtle Pizza</span>

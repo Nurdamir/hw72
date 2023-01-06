@@ -5,7 +5,6 @@ import {useAppDispatch} from "../../app/hooks";
 
 interface Props {
   pizza: Pizza;
-  // onClick: React.MouseEventHandler;
 }
 
 const ClientPizzaItem: React.FC<Props> = ({pizza}) => {
