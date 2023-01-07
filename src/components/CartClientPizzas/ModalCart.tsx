@@ -37,10 +37,6 @@ const ModalCart: React.FC<Props> = ({show, onClose}) => {
     onClose();
   };
 
-  if (cartDishes.length !== 1) {
-    onClose();
-  }
-
   return (
     <div>
       <Modal show={show} onClose={onClose}>

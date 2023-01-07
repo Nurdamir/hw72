@@ -13,9 +13,7 @@ const Orders = () => {
   const ordersLoading = useAppSelector(selectOrdersLoading);
 
   useEffect(() => {
-    (async () => {
-      await dispatch(getOrders());
-    })();
+    dispatch(getOrders());
   }, [dispatch]);
 
   const onRemove = async (id: string) => {
@@ -23,24 +21,30 @@ const Orders = () => {
     await dispatch(removeOrderFromList(id))
   };
 
+  const total = orders.map(item => {
+    return item.orderDishes.reduce((acc, p) => {
+      return acc += p.price * p.amount;
+    }, 0);
+  });
+
   let content: ReactElement[] | ReactElement = (
     <p className="fs-3 fw-bold">There are no orders yet!</p>
   );
 
   if (orders.length > 0) {
     content = (
-      orders.map(item => (
+      orders.map((item, index) => (
         <div className="card mb-3 p-3" key={Math.random()}>
-          <div>{item.orderDishes.map(itemOrder => (
+          <div>{item.orderDishes.map((itemOrder) => (
             <div key={Math.random()} className="p-3">
               <span className=""><strong>Title:</strong> {itemOrder.title}</span>
               <span className="m-2">X {itemOrder.amount}</span>
               <span className="m-2"><strong>Price:</strong> {itemOrder.price} KGS</span>
-              {<div>Total: {(itemOrder.price * itemOrder.amount) + DELIVERY_PRICE} KGS</div>}
             </div>
           ))}
           </div>
           <div className="ps-3">Delivery: {DELIVERY_PRICE} KGS</div>
+          {<div>Total: {total[index]} KGS</div>}
           <button className="btn btn-danger" onClick={() => onRemove(item.id)}>Complete order</button>
         </div>
       ))
