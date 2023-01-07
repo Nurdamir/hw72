@@ -24,7 +24,7 @@ const Orders = () => {
   const total = orders.map(item => {
     return item.orderDishes.reduce((acc, p) => {
       return acc += p.price * p.amount;
-    }, 0);
+    }, DELIVERY_PRICE);
   });
 
   let content: ReactElement[] | ReactElement = (
