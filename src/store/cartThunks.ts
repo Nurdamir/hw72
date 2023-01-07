@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Order} from "../types";
 import axiosApi from "../axiosApi";
+import {Order} from "../types";
 
 export const createOrderDishes = createAsyncThunk<void, Order>(
   'orders/createOrder',

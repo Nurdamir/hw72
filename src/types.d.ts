@@ -23,18 +23,22 @@ export interface CartPizza {
 }
 
 export interface Order {
-  [id: string]: number | string;
+  [id: string]: number;
 }
 
 export interface ApiOrderList {
   [id: string]: Order;
 }
 
-// export interface FullOrder {
-//   id: string;
-//   title: string;
-//   price: number;
-//   amount: number;
-// }
+export interface OrderDish {
+  title: string;
+  price: number;
+  amount: number;
+}
+
+export interface FullOrder {
+  id: string;
+  orderDishes: OrderDish[];
+}
 
 

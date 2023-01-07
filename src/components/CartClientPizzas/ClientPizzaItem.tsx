@@ -24,8 +24,8 @@ const ClientPizzaItem: React.FC<Props> = ({pizza}) => {
         <div className="col-sm-4 rounded-start" style={imageStyle}/>
         <div className="col-sm-8">
           <div className="card-body">
-            <h5 className="card-title">{pizza.title}</h5>
-            <p className="card-text">{pizza.price} KGS</p>
+            <h5 className="card-title"><strong>Title:</strong> {pizza.title}</h5>
+            <p className="card-text"><strong>Price:</strong> {pizza.price} KGS</p>
           </div>
         </div>
       </div>

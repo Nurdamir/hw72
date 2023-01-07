@@ -1,18 +1,17 @@
-import {ApiPizza, Order, Pizza} from "../types";
-import {createSlice} from "@reduxjs/toolkit";
+import {ApiPizza, FullOrder, Pizza} from "../types";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../app/store";
 import {createPizza, deletePizza, fetchAllPizzas, fetchOnePizza, getOrders, updatePizza} from "./pizzasThunks";
 
 
-
 interface PizzasState {
   items: Pizza[];
-  orders: Order[];
+  orders: FullOrder[];
   onePizza: null | ApiPizza;
   fetchAllPizzasLoading: boolean;
   deleteLoading: false | string;
   createLoading: boolean;
-  updateLoading: false | string;
+  updateLoading: boolean;
   fetchOneLoading: boolean;
   fetchOrdersLoading: boolean;
 }
@@ -32,7 +31,11 @@ const initialState: PizzasState = {
 export const pizzasSlice = createSlice({
   name: 'pizzas',
   initialState,
-  reducers: {},
+  reducers: {
+    removeOrderFromList: (state, action: PayloadAction<string>) => {
+      state.orders = state.orders.filter(item => item.id !== action.payload)
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getOrders.pending, (state) => {
       state.fetchOrdersLoading = true;
@@ -76,8 +79,8 @@ export const pizzasSlice = createSlice({
       state.createLoading = false;
     });
 
-    builder.addCase(updatePizza.pending, (state, {meta: {arg: pizzaId}}) => {
-      state.updateLoading = pizzaId.id;
+    builder.addCase(updatePizza.pending, (state) => {
+      state.updateLoading = true;
     });
     builder.addCase(updatePizza.fulfilled, (state) => {
       state.updateLoading = false;
@@ -100,6 +103,7 @@ export const pizzasSlice = createSlice({
 });
 
 export const pizzasReducer = pizzasSlice.reducer;
+export const {removeOrderFromList} = pizzasSlice.actions;
 
 export const selectOrders = (state: RootState) => state.pizzas.orders;
 export const selectPizzas = (state: RootState) => state.pizzas.items;
@@ -109,3 +113,4 @@ export const selectDeleteLoading = (state: RootState) => state.pizzas.deleteLoad
 export const selectCreateLoading = (state: RootState) => state.pizzas.createLoading;
 export const selectUpdateLoading = (state: RootState) => state.pizzas.updateLoading;
 export const selectOnePizza = (state: RootState) => state.pizzas.onePizza;
+export const selectOrdersLoading = (state: RootState) => state.pizzas.fetchOrdersLoading;

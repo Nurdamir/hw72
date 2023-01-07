@@ -7,13 +7,12 @@ import {createPizza} from "../../store/pizzasThunks";
 
 const NewDish = () => {
   const navigate = useNavigate();
-const dispatch = useAppDispatch();
-// const createLoading = useAppSelector(selectCreateLoading);
+  const dispatch = useAppDispatch();
 
-const onSubmit = async (dish: ApiPizza) => {
-  await dispatch(createPizza(dish));
-  navigate('/admin');
-};
+  const onSubmit = async (dish: ApiPizza) => {
+    await dispatch(createPizza(dish));
+    navigate('/admin');
+  };
 
   return (
     <div className="row mt-2">

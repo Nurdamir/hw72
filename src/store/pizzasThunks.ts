@@ -1,32 +1,51 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ApiOrderList, ApiPizza, ApiPizzasList, Order, Pizza} from "../types";
+import {ApiOrderList, ApiPizza, ApiPizzasList, FullOrder, Pizza} from "../types";
 import axiosApi from "../axiosApi";
+import {RootState} from "../app/store";
 
 interface UpdatePizzaParams {
   id: string;
   pizza: ApiPizza;
 }
 
-export const getOrders = createAsyncThunk(
+export const getOrders = createAsyncThunk<FullOrder[], undefined, {state: RootState}>(
   'orders/getOrders',
   async (_ , thunkAPI) => {
+    const allDishes = thunkAPI.getState().pizzas.items;
     const ordersResponse = await axiosApi.get<ApiOrderList | null>('/orders.json')
     const orders = ordersResponse.data;
 
-    let newOrders: Order[] = [];
+    let fullOrders: FullOrder[] = [];
+
     if (orders) {
-      newOrders = Object.keys(orders).map(id => {
+      Object.keys(orders).forEach(id => {
         const order = orders[id];
-        return {
-          ...order,
-          id: id
+        const orderDishes: FullOrder = {
+          id: id,
+          orderDishes: [],
         }
+        for (let key in order) {
+          allDishes.forEach(dish => {
+            if (dish.id === key) {
+              orderDishes.orderDishes.push({
+                title: dish.title,
+                price: dish.price,
+                amount: order[key],
+              })
+            }
+          })
+        }
+        fullOrders.push(orderDishes);
       });
     }
+    return fullOrders;
+  }
+);
 
-    // thunkAPI.getState()
-
-    return newOrders;
+export const removeOrder = createAsyncThunk<void, string>(
+  'orders/delete',
+  async (pizzaId) => {
+    await axiosApi.delete('/orders/' + pizzaId + '.json');
   }
 );
 

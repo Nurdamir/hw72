@@ -1,12 +1,12 @@
 import React from 'react';
-import './App.css';
 import Layout from "./components/Layout/Layout";
 import {Route, Routes} from "react-router-dom";
 import NewDish from "./containers/NewDish/NewDish";
 import EditDish from "./containers/EditDish/EditDish";
-import Pizzas from "./components/Pizzas/Pizzas";
+import Pizzas from "./containers/Pizzas/Pizzas";
 import Orders from "./containers/Orders/Orders";
 import Home from "./containers/Home/Home";
+import './App.css';
 
 function App() {
   return (

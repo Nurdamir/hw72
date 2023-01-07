@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {ApiPizza, PizzaMutation} from "../../types";
 import ButtonSpinner from "../Spinner/ButtonSpinner";
 import {useAppSelector} from "../../app/hooks";
 import {selectCreateLoading, selectOneFetchLoading, selectUpdateLoading} from "../../store/pizzasSlice";
 import Spinner from "../Spinner/Spinner";
+import {ApiPizza, PizzaMutation} from "../../types";
 
 interface Props {
   onSubmit: (dish: ApiPizza) => void;
@@ -74,7 +74,7 @@ const DishForm: React.FC<Props> = ({
           </div>
           <button
             type="submit"
-            // disabled={createLoading ? createLoading : 'updateLoading'}
+            disabled={createLoading ? createLoading : updateLoading}
             className="btn btn-primary">
             {updateLoading && <ButtonSpinner/>}
             {createLoading && <ButtonSpinner/>}
