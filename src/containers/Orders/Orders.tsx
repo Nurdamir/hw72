@@ -32,15 +32,15 @@ const Orders = () => {
       orders.map(item => (
         <div className="card mb-3 p-3" key={Math.random()}>
           <div>{item.orderDishes.map(itemOrder => (
-            <div key={Math.random()}>
-              <span className="m-2"><strong>Title:</strong> {itemOrder.title}</span>
+            <div key={Math.random()} className="p-3">
+              <span className=""><strong>Title:</strong> {itemOrder.title}</span>
               <span className="m-2">X {itemOrder.amount}</span>
               <span className="m-2"><strong>Price:</strong> {itemOrder.price} KGS</span>
               {<div>Total: {(itemOrder.price * itemOrder.amount) + DELIVERY_PRICE} KGS</div>}
             </div>
           ))}
           </div>
-          <div>Delivery: {DELIVERY_PRICE} KGS</div>
+          <div className="ps-3">Delivery: {DELIVERY_PRICE} KGS</div>
           <button className="btn btn-danger" onClick={() => onRemove(item.id)}>Complete order</button>
         </div>
       ))
@@ -50,7 +50,7 @@ const Orders = () => {
   return (
     <>
       <h3 className="d-flex justify-content-center m-3">Orders</h3>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex flex-column">
         {ordersLoading ? <Spinner/> : content}
       </div>
     </>
